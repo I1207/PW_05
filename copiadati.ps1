@@ -14,8 +14,6 @@ $destinationContext = New-AzStorageContext -StorageAccountName $DestinationStora
 # Get the list of blobs in the source container
 $sourceBlobs = Get-AzStorageBlob -Container $sourceContainerName -Context $sourceContext
 
-# Loop through each blob and start the copy
-$sourceBlobs = Get-AzStorageBlob -Container $sourceContainerName -Context $sourceContext
 
 # Loop through each blob and start the copy if it doesn't already exist in the destination
 foreach ($blob in $sourceBlobs) {
