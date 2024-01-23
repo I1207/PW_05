@@ -1,7 +1,15 @@
-create view [dwh].[vBC_nation1] as
+
+DROP VIEW IF EXISTS [dwh].[vBC_nation1];
+create view [dwh].[vBC_nation1] 
+as
 select 
-CAST([measure] AS varchar(10)) as [measure],
-CAST([location] AS nvarchar(25)) as [location],
+CASE 
+        WHEN CHARINDEX('(', CAST([measure] AS NVARCHAR(40))) > 0 THEN 
+            SUBSTRING(CAST([measure] AS NVARCHAR(40)), 1, CHARINDEX('(', CAST([measure] AS NVARCHAR(40))) - 1)
+        ELSE 
+            CAST([measure] AS NVARCHAR(40))
+    END AS [measure],
+CAST([location] AS nvarchar(100)) as [location],
 CAST([sex] AS varchar(10))as [sex],
 CAST([age] AS varchar(25)) as [age],
 CAST([cause] AS varchar(30)) as [cause],
@@ -10,14 +18,20 @@ CAST([year] AS int) as [year],
 CAST(CAST([val] AS float)as decimal(15,7)) as [val],
 CAST(CAST([upper] AS float)as decimal(15,7)) as [upper],
 CAST(CAST([lower] AS float)as decimal(15,7)) as [lower]
-from [stg].[BC_nation1]
+from [stg].[BC_nation1];
+go
 
 
 -----------------------
-
+DROP VIEW IF EXISTS [dwh].[vBC_Percent1];
 create view [dwh].[vBC_Percent1] as
 select 
-CAST([measure] AS varchar(10)) as [measure],
+CASE 
+        WHEN CHARINDEX('(', CAST([measure] AS NVARCHAR(40))) > 0 THEN 
+            SUBSTRING(CAST([measure] AS NVARCHAR(40)), 1, CHARINDEX('(', CAST([measure] AS NVARCHAR(40))) - 1)
+        ELSE 
+            CAST([measure] AS NVARCHAR(40))
+    END AS [measure],
 CAST([location] AS char(6)) as [year],
 CAST([sex] AS varchar(10))as [sex],
 CAST([age] AS varchar(25)) as [age],
@@ -35,14 +49,20 @@ cast (CASE -- year
 CAST(CAST([val] AS float)as decimal(15,7)) as [val],
 CAST(CAST([upper] AS float)as decimal(15,7)) as [upper],
 CAST(CAST([lower] AS float)as decimal(15,7)) as [lower]
-from [stg].[BC_Percent1]
+from [stg].[BC_Percent1];
+go
 
 --------------------------
-
+DROP VIEW IF EXISTS [dwh].[vBC_predict1];
 create view [dwh].[vBC_predict1] as
 select 
-CAST([measure] AS varchar(10)) as [measure],
-CAST([location] AS nvarchar(25)) as [location],
+CASE 
+        WHEN CHARINDEX('(', CAST([measure] AS NVARCHAR(40))) > 0 THEN 
+            SUBSTRING(CAST([measure] AS NVARCHAR(40)), 1, CHARINDEX('(', CAST([measure] AS NVARCHAR(40))) - 1)
+        ELSE 
+            CAST([measure] AS NVARCHAR(40))
+    END AS [measure],
+CAST([location] AS nvarchar(100)) as [location],
 CAST([sex] AS varchar(10))as [sex],
 CAST([age] AS varchar(25)) as [age],
 CAST([cause] AS varchar(30)) as [cause],
@@ -51,13 +71,19 @@ CAST([year] AS int) as [year],
 CAST(CAST([val] AS float)as decimal(15,7)) as [val],
 CAST(CAST([upper] AS float)as decimal(15,7)) as [upper],
 CAST(CAST([lower] AS float)as decimal(15,7)) as [lower]
-from [stg].[BC_predict1]
+from [stg].[BC_predict1];
+go
 
 -------------------------
-
+DROP VIEW IF EXISTS [dwh].[vBC_region_SEX1];
 create view [dwh].[vBC_region_SEX1] as
 select 
-CAST([measure] AS varchar(10)) as [measure],
+CASE 
+        WHEN CHARINDEX('(', CAST([measure] AS NVARCHAR(40))) > 0 THEN 
+            SUBSTRING(CAST([measure] AS NVARCHAR(40)), 1, CHARINDEX('(', CAST([measure] AS NVARCHAR(40))) - 1)
+        ELSE 
+            CAST([measure] AS NVARCHAR(40))
+    END AS [measure],
 --CAST([location] AS nvarchar(25)) as [location],
 CAST([sex] AS varchar(10))as [sex],
 CAST([age] AS varchar(25)) as [age],
@@ -67,15 +93,21 @@ CAST([year] AS int) as [year],
 CAST(CAST([val] AS float)as decimal(15,7)) as [val],
 CAST(CAST([upper] AS float)as decimal(15,7)) as [upper],
 CAST(CAST([lower] AS float)as decimal(15,7)) as [lower]
-from [stg].[BC_region_SEX1]
+from [stg].[BC_region_SEX1];
+go
 
 -----------------------
-
-create view [dwh].[vBC_region1] 
+DROP VIEW IF EXISTS [dwh].[vBC_predict1];
+create view [dwh].[vBC_predict1] 
 as
 select 
-CAST([measure] as varchar(10)) as [measure],
- CAST([location] as nvarchar(50)) as [location],
+CASE 
+        WHEN CHARINDEX('(', CAST([measure] AS NVARCHAR(40))) > 0 THEN 
+            SUBSTRING(CAST([measure] AS NVARCHAR(40)), 1, CHARINDEX('(', CAST([measure] AS NVARCHAR(40))) - 1)
+        ELSE 
+            CAST([measure] AS NVARCHAR(40))
+    END AS [measure],
+ CAST([location] as nvarchar(100)) as [location],
  CAST([sex] as nvarchar(10)) as [sex],
  CAST([age] as nvarchar(20)) as [age],
  CAST([cause] as varchar(15)) as [cause],
@@ -84,22 +116,26 @@ CAST([measure] as varchar(10)) as [measure],
  CAST([val] as decimal(15,7)) as [val],
  CAST([upper] as decimal(15,7)) as [upper],
  CAST([lower] as decimal(15,7 )) [lower]
- from [stg].[BC_region1]
+ from [stg].[BC_region1];
+ go
 
 ------------------
+
+DROP VIEW IF EXISTS [dwh].[vHDI_1990];
 create view [dwh].[vHDI_1990]
 as
 select 
-CAST([Country] as nvarchar(50)) as [Country],
+CAST([Country] as nvarchar(100)) as [Country],
 CAST([HDI] as decimal(5,2 )) as [HDI]
-from [stg].[HDI_1990]
+from [stg].[HDI_1990];
+go
 
 -----------------------
-
+DROP VIEW IF EXISTS [dwh].[vIHME_POP_2017_2100_POP_REFERENC];
 create view [dwh].[vIHME_POP_2017_2100_POP_REFERENC] as
 select 
 CAST([location_id] as int) as [location_id],
-CAST([location_name] as nvarchar(50)) as [location_name],
+CAST([location_name] as nvarchar(100)) as [location_name],
 CAST([sex_id] as INT) as [sex_id],
  CAST([sex] as nvarchar(10)) as [sex],
  CAST([age_group_id] as INT) as [age_group_id],
@@ -114,19 +150,21 @@ CAST([sex_id] as INT) as [sex_id],
  CAST([val] as float) as [val],
  CAST([upper] as float) as [upper],
  CAST([lower] as float)  as [lower]
-from [stg].[IHME_POP_2017_2100_POP_REFERENC]
+from [stg].[IHME_POP_2017_2100_POP_REFERENC];
+go
 
 -----------------------
-
+DROP VIEW IF EXISTS [dwh].[vWorld_population_age_standard];
 create view [dwh].[vWorld_population_age_standard]
 as 
 select 
 CAST([age] as nvarchar(10)) as [age],
 CAST([std_population] as decimal(10,2)) as [std_population]
-from [stg].[World_population_age_standard]
+from [stg].[World_population_age_standard];
+go
 
 --no predict
-[dwh].[vBC_Percent1]
-[dwh].[vBC_region_SDI1]
-[dwh].[vBC_nation1]--(?)
+--[dwh].[vBC_Percent1]
+--[dwh].[vBC_region_SDI1]
+--[dwh].[vBC_nation1]--(?)
 
