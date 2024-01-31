@@ -251,6 +251,32 @@ R.[age] = 'All ages'
 
 select * from dwh.test_aml
 
+-----------------------------------------------------------
+
+create view dwh.vGHDX_SDI_Quintiles
+as
+select 
+cast([sdi_quintile] as nvarchar(20)) as SDI,
+cast([lower_bound] as float) as [lower],
+cast([upper_bound] as float) as [upper]
+from [stg].[GHDX_SDI_Quintiles]
+
+
+
+------------------------------
+
+
+create view dwh.vGHDX_Deaths_SDIcluster
+as
+select 
+CAST([location] AS NVARCHAR(100)) AS SDI,
+CAST([sex] AS NVARCHAR(10)) AS [sex],
+CAST([rei] AS NVARCHAR(25)) AS Risk,
+CAST([year] AS CHAR(4)) AS [year],
+CAST([val] AS FLOAT) AS [val]
+from [stg].[GHDX_Deaths_SDIcluster]
+
+
 
 
 -----------------------------------------------------------------
@@ -270,18 +296,6 @@ from [stg].[GHDX_Deaths]
 where sex = 'Both'
 
 
-------------------------------
-
-
-create view dwh.vGHDX_Deaths_SDIcluster
-as
-select 
-CAST([location] AS NVARCHAR(100)) AS SDI,
-CAST([sex] AS NVARCHAR(10)) AS [sex],
-CAST([rei] AS NVARCHAR(25)) AS Risk,
-CAST([year] AS CHAR(4)) AS [year],
-CAST([val] AS FLOAT) AS [val]
-from [stg].[GHDX_Deaths_SDIcluster]
 
 --------------------------------------
 
@@ -326,13 +340,6 @@ cast([2019]as decimal(5,4)) as [2019]
 from [stg].[GHDX_SDI_Countries]
 
 
-create view dwh.vGHDX_SDI_Quintiles
-as
-select 
-cast([sdi_quintile] as nvarchar(20)) as SDI,
-cast([lower_bound] as float) as [lower],
-cast([upper_bound] as float) as [upper]
-from [stg].[GHDX_SDI_Quintiles]
 
 
 

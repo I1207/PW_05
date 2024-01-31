@@ -24,4 +24,26 @@ GO
 
 
 
-select * from [ml].[Death_GHDX]
+WITH CTE_NAT AS(
+SELECT [location]
+      , CAST([year] as FLOAT) AS year
+      , [SDI]
+  FROM [dwh].[vGHDX_SDI_Countries_UNPIVOT]
+),
+cte_a AS (
+SELECT
+    [location],
+    (year*SDI-year) as a
+FROM CTE_NAT
+)
+select
+    a.[location]
+    -- , AVG(a) as A_avg
+    , MAX(a) AS A_max
+from cte_a AS a
+    INNER JOIN [dwh].[GHDX_Deaths_CLEAN2] AS b
+    ON a.[location] = b.[location] --(!) Gambia isn't present in [GHDX_SDI_Countries_CLEAN1]
+GROUP BY a.[location]
+
+
+sele
