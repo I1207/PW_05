@@ -1,4 +1,5 @@
 DROP VIEW IF EXISTS [dwh].[vBC_nation1];
+go
 create view [dwh].[vBC_nation1]
 as
     select
@@ -30,6 +31,7 @@ go
 select *
 from [dwh].[vBC_Percent1]
 DROP VIEW IF EXISTS [dwh].[vBC_Percent1];
+go
 create view [dwh].[vBC_Percent1]
 as
     select
@@ -64,6 +66,7 @@ go
 select *
 from [dwh].[vBC_predict1]
 DROP VIEW IF EXISTS [dwh].[vBC_predict1];
+go
 create view [dwh].[vBC_predict1]
 as
     select
@@ -95,6 +98,7 @@ go
 select *
 from [dwh].[vBC_region_SDI1]
 DROP VIEW IF EXISTS [dwh].[vBC_region_SDI1];
+go
 create view [dwh].[vBC_region_SDI1]
 as
     select
@@ -114,6 +118,7 @@ as
         CAST(CAST([upper] AS float)as decimal(15,7)) as [upper],
         CAST(CAST([lower] AS float)as decimal(15,7)) as [lower]
     from [stg].[BC_region_SDI1];
+    go
 
 -----------------------
 
@@ -122,6 +127,7 @@ as
 select *
 from [dwh].[vBC_region_SEX1]
 DROP VIEW IF EXISTS [dwh].[vBC_region_SEX1];
+go
 create view [dwh].[vBC_region_SEX1]
 as
     select
@@ -141,12 +147,13 @@ as
         CAST(CAST([upper] AS float)as decimal(15,7)) as [upper],
         CAST(CAST([lower] AS float)as decimal(15,7)) as [lower]
     from [stg].[BC_region_SEX1];
+    go
 
 
 select *
 from [dwh].[vBC_region1]
-DROP VIEW IF EXISTS [dwh].[vBC_region1]
-;
+DROP VIEW IF EXISTS [dwh].[vBC_region1];
+go
 create view [dwh].[vBC_region1]
 as
     select
@@ -177,6 +184,7 @@ as
 select *
 from [dwh].[vHDI_1990]
 DROP VIEW IF EXISTS [dwh].[vHDI_1990];
+go
 create view [dwh].[vHDI_1990]
 as
     select
@@ -195,6 +203,7 @@ go
 select *
 from [dwh].[vIHME_POP_2017_2100_POP_REFERENC]
 DROP VIEW IF EXISTS [dwh].[vIHME_POP_2017_2100_POP_REFERENC];
+go
 create view [dwh].[vIHME_POP_2017_2100_POP_REFERENC]
 as
     select
@@ -219,6 +228,7 @@ go
 
 -----------------------
 DROP VIEW IF EXISTS [dwh].[vWorld_population_age_standard];
+go
 create view [dwh].[vWorld_population_age_standard]
 as
     select
@@ -232,8 +242,9 @@ go
 --[dwh].[vBC_region_SDI1]
 --[dwh].[vBC_nation1]--(?)
 
-
-create view dwh.test_aml
+drop view if exists [dwh].[test_aml];
+go
+create view [dwh].[test_aml]
 as
     select
         P.[SDI]
@@ -260,26 +271,26 @@ P.[measure] = 'Deaths'
         P.[age] = 'All ages'
         and
         R.[age] = 'All ages'
-
-select *
-from dwh.test_aml
+go
 
 -----------------------------------------------------------
-
-create view dwh.vGHDX_SDI_Quintiles
+drop view if exists [dwh].[vGHDX_SDI_Quintiles];
+go
+create view [dwh].[vGHDX_SDI_Quintiles]
 as
     select
         cast([sdi_quintile] as nvarchar(20)) as SDI,
         cast([lower_bound] as float) as [lower],
         cast([upper_bound] as float) as [upper]
     from [stg].[GHDX_SDI_Quintiles]
-
+go
 
 
 ------------------------------
 
-
-create view dwh.vGHDX_Deaths_SDIcluster
+drop view if exists [dwh].[vGHDX_Deaths_SDIcluster];
+go
+create view [dwh].[vGHDX_Deaths_SDIcluster]
 as
     select
         CAST([location] AS NVARCHAR(100)) AS SDI,
@@ -288,17 +299,15 @@ as
         CAST([year] AS CHAR(4)) AS [year],
         CAST([val] AS FLOAT) AS [val]
     from [stg].[GHDX_Deaths_SDIcluster]
-
+go
 
 
 
 -----------------------------------------------------------------
 
-select *
-from dwh.[vGHDX_Deaths]
-
-drop view if exists dwh.[vGHDX_Deaths]
-CREATE VIEW dwh.[vGHDX_Deaths]
+drop view if exists [dwh].[vGHDX_Deaths];
+go
+CREATE VIEW [dwh].[vGHDX_Deaths]
 as
     select
         CAST([location] AS NVARCHAR(100)) AS [location],
@@ -308,16 +317,16 @@ as
         CAST([val] AS FLOAT) AS [val]
     from [stg].[GHDX_Deaths]
     where sex = 'Both'
-
+go
 
 
 --------------------------------------
 
 
 
-drop view if exists dwh.vGHDX_SDI_Countries
+drop view if exists [dwh].[vGHDX_SDI_Countries];
 go
-create view dwh.vGHDX_SDI_Countries
+create view [dwh].[vGHDX_SDI_Countries]
 as
     select
         CAST([location] AS NVARCHAR(100)) AS Location,
@@ -352,7 +361,7 @@ as
         cast([2018]as decimal(5,4)) as [2018],
         cast([2019]as decimal(5,4)) as [2019]
     from [stg].[GHDX_SDI_Countries]
-
+go
 
 
 
